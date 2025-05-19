@@ -29,14 +29,34 @@ export default function App() {
       setShowHeights(false);
     }
   }
-  const updateValues= ()=>{
-  if(choice==="feet")
-    {
-      setMeter=input*0.3048;
-      setCm=input*30.48;
-      setInches=input*12;
+ function updateValues()=>{
+    if (!input) return;
+    
+    if (selectedValue === "Height") {
+      if (choice === "feet") {
+        setMeter(input * 0.3048);
+        setCm(input * 30.48);
+        setInches(input * 12);
+      } else if (choice === "cm") {
+        setMeter(input / 100);
+        setFeet(input / 30.48);
+        setInches(input / 2.54);
+      }
     }
-  } 
+   if (selectedValue === "Weight") {
+      if (choice === "Pounds") {
+        setKilos(input * 0.453592);
+        setGrams(input * 453.592);
+        setOunce(input * 16);
+      } else if (choice === "Kilos") {
+        setPounds(input * 2.20462);
+        setGrams(input * 1000);
+        setOunce(input * 35.274);
+      }
+    }
+  }
+  }
+
   function handleWeightChange(event) {
     setChoice(event.target.value);
     
@@ -72,7 +92,7 @@ export default function App() {
 
       <button onClick={() => alert(`You selected: ${selectedValue}`)}>Submit</button>
       <p>You selected: {selectedValue} in {choice}</p>
-      <input placeholder="Input Number to Convert" onChange={(e) =>{ setInput(e.target.value);updateValues;}}></input>
+      <input placeholder="Input Number to Convert" onChange={(e) =>{ setInput(e.target.value);updateValues();}}></input>
       <p>{input} {choice}</p>
 
       <div hidden ={showHeights}>
